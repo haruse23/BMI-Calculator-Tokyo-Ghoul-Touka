@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI Calculator</title>
+  <link rel="stylesheet" href="BMI.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+  <div class="CONTAINER">
+    <h1 class='bmi'>BMI Calculator</h1>
+
+    <h2 class="h2weight">Weight (kg):</h2>
+    <input id="Weight" type="text" placeholder="Enter your weight in kilograms" />
+
+    <h2 class="h2height">Height (m):</h2>
+    <input id="Height" type="text" placeholder="Enter your height in meters" />
+
+    <button class="button" onclick="calculateBMI()">Calculate</button>
+    <div id="result" class="result"></div>
+</div>
+  </div>
+
+  <script>
+ function calculateBMI() {
+      // Get the input values
+      var weight = parseFloat(document.getElementById("Weight").value);
+      var height = parseFloat(document.getElementById("Height").value);
+
+      // Validate inputs
+      if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        document.getElementById("result").innerHTML = "Please enter valid weight and height values.";
+        return;
+      }
+
+      
+      var bmi = weight / (height * height);
+
+      
+      var classification = "";
+      var classificationClass = "";
+
+      if (bmi < 18.5) {
+        classification = "Underweight";
+        classificationClass = "underweight";
+      } else if (bmi >= 18.5 && bmi <= 24.9) {
+        classification = "Normal";
+        classificationClass = "normal";
+      } else if (bmi >= 25 && bmi <= 29.9) {
+        classification = "Overweight";
+        classificationClass = "overweight";
+      } else {
+        classification = "Obese";
+        classificationClass = "obese";
+      }
+
+      
+      document.getElementById("result").innerHTML = `
+        <p class="bmi-label">Your BMI is:</p>
+        <p class="bmi-value">${bmi.toFixed(2)}</p>
+        <p class="classification-label ${classificationClass}">You're ${classification}</p>
+      `;
+    }
+           // Mouse move event to track the mouse position
+    document.addEventListener('mousemove', (e) => {
+      // Get the mouse coordinates
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+     
+
+      // Calculate the background movement based on mouse position
+      const moveX = (mouseX / window.innerWidth - 0.5) * 200; // Adjust 50 for stronger/fainter effect
+      const moveY = (mouseY / window.innerHeight - 0.5) * 200; // Adjust 50 for stronger/fainter effect
+     
+
+      // Apply the background position change
+      document.body.style.backgroundPosition = `${50 + moveX}% ${50 + moveY}%`;
+    });
+</script>
+</body>
+</html>
